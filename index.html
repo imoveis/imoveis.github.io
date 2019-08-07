@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="pt-BR">
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <title>Desafio das 52 semanas</title>
+      <!-- Compiled and minified CSS -->
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+      <!-- Compiled and minified JavaScript -->
+   </head>
+   <body translate="no" class="main" ng-app="myApp">
+      <main class="container" ng-controller="mainController" ng-init="init()">
+         <!--   Icon Section   -->
+         <div class="row">
+            <div class="col-md-4">
+               <div class="form-group">
+                  <label>Buscar por nome</label>
+                  <input type="text" class="form-control" id="autocomplete-input" class="autocomplete" ng-model="query" placeholder="Ex: CAPAO REDONDO" />
+               </div>
+            </div>
+            <div class="col-md-4">
+               <div class="form-group">
+                  <label>Selecionar opção</label>
+                  <select class="form-control" ng-model="categoryFilter" ng-options="cat for cat in availableCategories">
+                     <option value="">Filtrar por data</option>
+                  </select>
+               </div>
+            </div>
+            <div class="col-md-4">
+               <div class="form-group">
+                  <label>Selecionar opção</label>
+                  <select class="form-control" ng-model="statusFilter" ng-options="spec for spec in availableSpecies">
+                     <option value="">Filtrar por situação</option>
+                  </select>
+               </div>
+            </div>
+         </div>
+         <div class="row">
+            <div class="col s12">
+               <h4 class="center">Total de semanas: {{cats.length}}</h4>
+               <div ng-show="!cats.length">
+                  <h4 class="center">Nada encontrado</h4>
+               </div>
+            </div>
+         </div>
+         <div class="row">
+            <div class="col-md-3" ng-repeat="cat in cats=(results | filter:{gsx$nome.$t: query} | filter:{gsx$categoria.$t: categoryFilter} | filter:{gsx$status.$t: statusFilter} | orderBy:orderProp | myFilter:catFilter)" class="{{classes.gsx$id.$t}}">
+               <div class="card mb-4 shadow-sm">
+                  <div class="card-body mh-4">
+                     <h6 class="card-title">{{cat.gsx$nome.$t}}</h6>
+                     <small class="text-muted">{{cat.gsx$logradouro.$t}} - {{cat.gsx$bairro.$t}}</small>
+                     <div class="d-flex justify-content-between align-items-center mt-2">
+                        <div class="btn-group">
+                        <button type="button" class="btn btn-sm btn-outline-primary btn-block" onclick="location.href='page.php?key={{key}}&id={{cat.id.$t.substr(110)}}'">Detalhes</button>
+                        </div>
+                        <small class="text-muted">{{cat.gsx$feirantes.$t}} feirantes</small>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </main>
+      <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.1.5/angular.min.js"></script>
+      <script src="http://jorge.eu3.org/feiras/js/app.js"></script>
+   </body>
+</html>
